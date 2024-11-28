@@ -56,13 +56,6 @@ class MatchingGame:
                 button.grid(row=i+1, column=j, padx=2, pady=2)
                 self.buttons[i][j] = button
 
-    # 게임 시작 함수
-    def start_game(self):
-        self.reset_game()
-        if not self.timer_running:
-            self.timer_running = True
-            self.time_limit = 60  # 제한 시간 60초로 설정
-            self.update_timer()
 
     # 타이머 업데이트 함수
     def update_timer(self):
@@ -75,24 +68,36 @@ class MatchingGame:
             messagebox.showinfo("게임 오버", "제한 시간을 초과했습니다. 다시 시도하세요!")
             self.reset_game()
 
+
+
     # 게임을 초기 상태로 리셋하는 함수
     def reset_game(self):
         random.shuffle(self.pictures)
         self.first_click = None
         self.matches = 0
 
-        # 모든 버튼 초기 상태로 변경
+        # 모든 카드를 초기 상태로 변경
         for i in range(4):
             for j in range(4):
                 button = self.buttons[i][j]
                 button.config(image=self.empty_image, state='normal', relief='raised')
-        
+
         # 타이머 리셋
         self.timer_running = False
         self.time_limit = 60
         self.timer_label.config(text="남은 시간: 60초")
 
-    # 버튼 클릭 시 호출되는 함수
+
+    # 게임 시작 함수
+    def start_game(self):
+        self.reset_game()
+        if not self.timer_running:
+            self.timer_running = True
+            self.time_limit = 60  # 제한 시간 60초로 설정
+            self.update_timer()
+
+
+    # 카드 클릭 시 호출되는 함수
     def on_click(self, row, col):
         button = self.buttons[row][col]
 
@@ -104,10 +109,10 @@ class MatchingGame:
             messagebox.showinfo("안내", "게임 시작 버튼을 눌러주세요!")
             return
 
-        # 애니메이션 효과: 버튼 크기 살짝 키우기
+        # 애니메이션 효과
         button.config(relief='sunken')
 
-        # 버튼에 해당하는 그림 표시
+        # 카드에 해당하는 그림 표시
         picture_id = self.pictures[row * 4 + col]
         button.config(image=self.images[picture_id - 1], state='disabled')
 
