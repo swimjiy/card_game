@@ -62,7 +62,7 @@ class MatchingGame:
         if self.timer_running and self.time_limit > 0:
             self.time_limit -= 1
             self.timer_label.config(text=f"남은 시간: {self.time_limit}초")
-            self.root.after(1000, self.update_timer)
+            self.root.after(1000, self.update_timer) # 1000초 뒤에 update_timer() 함수 실행
         elif self.time_limit == 0:
             self.timer_running = False
             messagebox.showinfo("게임 오버", "제한 시간을 초과했습니다. 다시 시도하세요!")
